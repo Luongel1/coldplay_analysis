@@ -1,26 +1,26 @@
-#### Preamble ####
-# Purpose: Downloads and saves the data from [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+### Preamble ###
+# Purpose: Downloads and saves the data from spotify
+# Author: Abdullah Motasim, Elizabeth Luong,  Yuanting Han
+# Date: 10 October 2024
+# Contact: abdullah.motasim@utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: spotifyr
+# Any other information needed? Spotify developers account with client_id and client_secret
 
 
 #### Workspace setup ####
-library(opendatatoronto)
-library(tidyverse)
-# [...UPDATE THIS...]
+library(spotifyr)
+
+# Uncomment these functions to setup yoour enviornment
+# Sys.setenv(SPOTIFY_CLIENT_ID = '')
+# Sys.setenv(SPOTIFY_CLIENT_SECRET = '')
 
 #### Download data ####
-# [...ADD CODE HERE TO DOWNLOAD...]
+coldplay <- get_artist_audio_features("coldplay")
+
 
 
 
 #### Save data ####
-# [...UPDATE THIS...]
-# change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
-
+saveRDS(coldplay, "data/raw_data.rds")
          
