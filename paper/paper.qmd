@@ -1,5 +1,5 @@
 ---
-title: "Analysis of Coldplay Musical Trends(2000-2022)"
+title: "Analysis of Coldplay Musical Trends (2000-2022)"
 subtitle: "Coldplay has a postive correlation within the energy and tempo in the songs they release"
 author: 
   - Abdullah Motasim
