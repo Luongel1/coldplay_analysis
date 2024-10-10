@@ -1,13 +1,14 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Analysis of Coldplay Musical Trends(2000-2022)"
+subtitle: "Coldplay has a postive correlation within the energy and tempo in the songs they release"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: [https://github.com/RohanAlexander/starter_folder](https://github.com/RohanAlexander/starter_folder)."
+  - Abdullah Motasim
+  - Elizabeth Luong
+  - Yuanting Han
+thanks: "Code and data are available at: [https://github.com/Luongel1/coldplay_analysis](https://github.com/Luongel1/coldplay_analysis)."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This report investigates the musical evolution of British rock band Coldplay using data from Spotify. We analyze relationships between energy and tempo . Our key findings suggest a positive correlation between energy and tempo, with higher energy tracks generally having a faster tempo."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -18,236 +19,93 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
-library(tidyverse)
-library(palmerpenguins)
+library(spotifyr)
+library(ggplot2)
+# Load Data
+coldplay <- readRDS(here::here("data/raw_data.rds"))
+
 ```
 
 
 # Introduction
 
-Overview paragraph
+Music is a powerful medium that conveys emotions, moods, and energy through a combination of rhythm, melody, and tempo. In modern music, the relationship between tempo (the speed of a song) and energy (the intensity and emotional drive) is particularly significant. Different genres and musical styles use tempo and energy in varied ways to evoke specific emotional responses, making this relationship a key area of interest in understanding how music impacts listeners.
 
-Estimand paragraph
+Coldplay, formed in 1997, is renowned for their broad musical range. To better understand the development of their sound over time, this report hopes to analyze how the energy and tempo on the music are correlated. 
 
-Results paragraph
-
-Why it matters paragraph
-
-Telegraphing paragraph: The remainder of this paper is structured as follows. @sec-data....
+Data for this analysis were collected from Spotify, a widely used music streaming platform that provides various audio features for each track. These features help to quantify different musical elements, allowing for an in-depth exploration of Coldplay’s discography.
 
 
-
+The remainder of this paper is structured as follows. @sec-data discusses the tools and technologies we utilized to source and analyze our data. @sec-discussion section graphs the data  and discusses what these graphs can tell us about the bands music.
 
 
 
 # Data {#sec-data}
+All analysis was performed using R @citeR and the following packages: spotifyr @citeSpotifyr and ggplot2 @citeGgplot2. The data utilized for the analysis was sourced from the Spotify Web API @spotify_developer, which provides detailed track information for artists. The variables used in this report include:
 
-## Overview
+Energy: A measure from 0.0 to 1.0 reflecting the intensity and activity of a track.
+Tempo: The speed of a track in beats per minute (BPM).
+*Note: @cite_spotify_audio_features used to source information on variables
 
-We use the statistical programming language R [@citeR].... Our data [@shelter].... Following @tellingstories, we consider...
-
-Overview text
-
-## Measurement
-	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
-
-## Outcome variables
-
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
-
-
-
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-valence-speech
+#| fig-cap: Speechiness vs. Valence-Investigating the relationship between spoken-word elements and the emotional tone of their songs.
 #| echo: false
+#| warning: false
+#| message: false
+#| output: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
+coldplay |>
+  ggplot(aes(
+    x = valence,
+    y = speechiness,
+  )) +
+  geom_point(alpha = 0.5) +
   theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+  labs(
+    x = "Valence",
+    y = "Speechiness",
+  )
+
 ```
 
-Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+# Discussion{#sec-discussion}
+This section will analyze the relationship and correlations between the musics tempo and its energy
+
+Our analysis, confirms a general positive correlation between tempo and energy in modern music. As energy levels increase, so do the tempos of the tracks. This trend is particularly clear in higher-energy songs, where fast tempos are more likely to accompany high levels of excitement and intensity. The data supports this conclusion, showing a clustering of high-energy tracks (with energy levels between 0.5 and 1.0) around higher tempo values, typically between -5 and 0 on the tempo scale.
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-energy-tempo
+#| fig-cap: Energy vs. Tempo-Exploring how energetic and fast-paced their songs are.
 #| echo: false
 #| warning: false
 #| message: false
 
-analysis_data <- read_csv(here::here("data/02-analysis_data/analysis_data.csv"))
+coldplay |>
+  ggplot(aes(
+    x = energy,
+    y = loudness,
+  )) +
+  geom_point(alpha=0.6) +
+    theme_minimal() +
+  labs(
+    x = "Energy",
+    y = "Tempo",
+  )
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
 ```
 
-Talk way more about it. 
+## Positive Correlation Between Tempo and Energy
+The scatter plot reveals that, for the majority of songs, higher energy levels are associated with faster tempos. This is especially true for songs with energy levels above 0.5, where the tempo rarely dips below -10, indicating a generally fast pace. This pattern aligns with the conventional understanding of high-energy music—genres like EDM, metal, and pop frequently use faster tempos to evoke excitement, movement, or urgency.
 
-## Predictor variables
+Data Support: The concentration of data points in the upper-right quadrant of the chart confirms this trend. These points represent high-energy tracks that align with faster tempos, reinforcing the idea that an increase in musical energy often corresponds to a more rapid rhythm.
 
-Add graphs, tables and text.
+## General Trends and Implications
+In summary, the analysis confirms a strong, albeit not perfect, positive correlation between tempo and energy in modern music. High-energy songs tend to have fast tempos, while low-energy songs are more often characterized by slow tempos. However, outliers in the data suggest that tempo is not the only factor influencing the energy of a track. Musicians can manipulate non-rhythmic elements like sound design and dynamics to create high-energy music with slow tempos or low-energy music with faster tempos.
+This understanding is valuable for both music producers and listeners. For producers, the data provides insight into how to balance tempo and energy when creating music to evoke specific emotional responses. For listeners, recognizing these trends helps explain why certain songs feel energetic or calming, even beyond the simple metric of tempo.
 
-Use sub-sub-headings for each outcome variable and feel free to combine a few into one if they go together naturally.
-
-
-
-
-
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-library(rstanarm)
-
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-Please don't use these as sub-heading labels - change them to be what your point actually is.
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
-```
 
 
 

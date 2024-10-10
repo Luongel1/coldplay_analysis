@@ -1,6 +1,6 @@
 ### Preamble ###
 # Purpose: Downloads and saves the data from spotify
-# Author: Abdullah Motasim, Elizabeth Luong,  Yuanting Han
+# Author: Abdullah Motasim, Elizabeth Luong, Yuanting Han
 # Date: 10 October 2024
 # Contact: abdullah.motasim@utoronto.ca
 # License: MIT
@@ -11,7 +11,7 @@
 #### Workspace setup ####
 library(spotifyr)
 
-# Uncomment these functions to setup yoour enviornment
+# Uncomment these functions to setup your enviornment
 # Sys.setenv(SPOTIFY_CLIENT_ID = '')
 # Sys.setenv(SPOTIFY_CLIENT_SECRET = '')
 
