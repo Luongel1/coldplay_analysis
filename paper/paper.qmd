@@ -1,5 +1,5 @@
 ---
-title: "Analysis of Coldplay Musical Trends (2000-2022)"
+title: "Analysis of Coldplay's Musical Trends (2000-2022)"
 subtitle: "Coldplay has a postive correlation within the energy and tempo in the songs they release"
 author: 
   - Abdullah Motasim
@@ -8,7 +8,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/Luongel1/coldplay_analysis](https://github.com/Luongel1/coldplay_analysis)."
 date: today
 date-format: long
-abstract: "This report investigates the musical evolution of British rock band Coldplay using data from Spotify. We analyze relationships between energy and tempo . Our key findings suggest a positive correlation between energy and tempo, with higher energy tracks generally having a faster tempo."
+abstract: "This report investigates the musical evolution of British rock band Coldplay using data from Spotify. We analyze relationships between energy and tempo. Our key findings suggest a positive correlation between energy and tempo, with higher energy tracks generally having a faster tempo."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -41,11 +41,12 @@ The remainder of this paper is structured as follows. @sec-data discusses the to
 
 
 # Data {#sec-data}
-All analysis was performed using R @citeR and the following packages: spotifyr @citeSpotifyr and ggplot2 @citeGgplot2. The data utilized for the analysis was sourced from the Spotify Web API @spotify_developer, which provides detailed track information for artists. The variables used in this report include:
+
+All analysis was performed using R @citeR and the following packages: spotifyr [@spotifyr] and ggplot2 [@ggplot2]. The data utilized for the analysis was sourced from the Spotify Web API [@spotify_developer], which provides detailed track information for artists. The variables used in this report include:
 
 Energy: A measure from 0.0 to 1.0 reflecting the intensity and activity of a track.
 Tempo: The speed of a track in beats per minute (BPM).
-*Note: @cite_spotify_audio_features used to source information on variables
+*Note: [@spotify_audio_features] used to source information on variables
 
 
 ```{r}
